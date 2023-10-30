@@ -1,0 +1,59 @@
+<div class="flex">
+
+  <div class="transition-all  w-full">
+
+    <h3>Main Area Content</h3>
+    <h3>Main Area Content</h3>
+    <label *ngFor="let item of items">
+      <input type="checkbox" (change)="toggleItemSelection(item.name)" [checked]="selectedItems.includes(item.name)" />
+      {{ item.name }}
+    </label>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et tenetur error, pariatur, quam officia sapiente odio laboriosam obcaecati vitae numquam, quia quibusdam! Quos explicabo nisi ducimus sapiente nesciunt, earum blanditiis.</p>
+
+
+
+    <button (click)="toggleSidebar()">Click Me</button>
+    test
+  </div>
+  <div class="w-16 bg-gray-200 overflow-hidden transition-all text-black" [ngStyle]="{'width': sidebarWidth}">
+ 
+
+    <div>
+      <h3>Selected Items:</h3>
+      <ul>
+      
+
+        <label *ngFor="let selected of selectedItems">
+          <input type="checkbox" (change)="toggleItemSelection(selected)" [checked]="selectedItems.includes(selected)" />
+          {{selected}}
+        </label>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<br>
+
+<!-- 
+<div *ngFor="let item of data">
+  {{ item | capitalizeAndRemoveUnderscore }}
+</div> -->
+
+
+
+<mat-form-field>
+  <mat-label>Select an Icon</mat-label>
+  <input matInput [formControl]="searchControl" (input)="filterIcons()">
+  <mat-select [(value)]="selectedIcon">
+    <mat-option *ngFor="let icon of filteredIcons" [value]="icon">
+     
+
+      <mat-icon>{{icon }}</mat-icon> {{ icon | capitalizeAndRemoveUnderscore }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+

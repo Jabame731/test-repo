@@ -1,0 +1,65 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+
+  main {
+  
+    overflow: hidden;
+
+    
+    display: flex;
+    
+    aside {
+       /* width: 200px;
+       flex-basis: 200px; */
+      flex: 0 0 200px;
+       display: none;
+    }
+
+    article {
+   
+      display: flex;
+      flex-direction: column;
+
+      .content {
+        overflow: auto;
+      }
+
+ 
+    }
+  }
+}
+
+
+
+
+
+
+header,
+aside,
+.content, 
+footer {
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+h1, p {
+  margin-top: 0;
+}
+
+header {
+  background-color: yellow;
+}
+aside {
+  background-color: papayawhip;
+}
+footer {
+  background-color: goldenrod;
+}
