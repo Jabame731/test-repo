@@ -1,4 +1,4 @@
-<div class="flex">
+<!-- <div class="flex">
 
   <div class="transition-all  w-full">
 
@@ -29,31 +29,176 @@
           {{selected}}
         </label>
       </ul>
+
+      <app-child-component
+        [data]="selectedItems"
+      >
+
+      </app-child-component>
+      
     </div>
   </div>
 </div>
 
 <hr>
 
-<br>
-
-<!-- 
-<div *ngFor="let item of data">
-  {{ item | capitalizeAndRemoveUnderscore }}
-</div> -->
+<br> -->
 
 
+<div class="h-screen xl:flex items-stretch justify-stretch">
+  <div class="transition-all w-full">
+    <ng-container *ngrxLet="queryFacets$; let queryFacets">
+      <div class="sticky top-0 bg-white z-10">
+        <!-- <form
+          class="w-1/3"
+          autocomplete="off"
+          (ngSubmit)="performSearch(searchControl.value, queryFacets)"
+          autocomplete="off"
+        >
+          <mat-form-field class="ml-4 w-full pt-4 !bg-white">
+            <mat-label>Search Contact Records</mat-label>
+            <span matPrefix><mat-icon>search</mat-icon></span>
+            <input
+              matInput
+              type="text"
+              autocomplete="off"
+              data-test="search-main-search-input"
+              [formControl]="searchControl"
+              [matAutocomplete]="auto"
+              [upsLibPrefillInputOption]="filteredOptions$ | async"
+              [currentValue]="searchControl.getRawValue()"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="autoCompleteSelected($event, queryFacets)"
+            >
+              <mat-option
+                *ngFor="let option of filteredOptions$ | async"
+                [value]="option.value"
+                class="search--input-option"
+              >
+                <span [innerHTML]="option.label"></span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form> -->
+        <div class="ml-4 text-gray pr-2">
+          <span class="text-sm"
+            >Use this audit to merge multiple records that were created for a
+            single contact. Using the “Merge Record” option will merge the
+            contacts to a single record, and you will be required to select
+            which record will be merged into, and which record will be deleted.
+            Using the “Mark as same person” button will leave the records
+            separate for the sales users, but allow Managers to view a single
+            record for each contact.</span
+          >
+        </div>
+      </div>
+    </ng-container>
 
-<mat-form-field>
-  <mat-label>Select an Icon</mat-label>
-  <input matInput [formControl]="searchControl" (input)="filterIcons()">
-  <mat-select [(value)]="selectedIcon">
-    <mat-option *ngFor="let icon of filteredIcons" [value]="icon">
-     
+    <div class="bg-white mt-4 h-auto">
+      <table
+        mat-table
+        class="mat-elevation-z8 !shadow-none"
+        aria-describedby="users_table"
+        [dataSource]="dataSource"
+      >
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (change)="enterselectedContact(row)"
+              [checked]="selectedItems.includes(row)"        
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
-      <mat-icon>{{icon }}</mat-icon> {{ icon | capitalizeAndRemoveUnderscore }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="p-10">
+            {{ element.position }}
+          </td>
+        </ng-container>
+
+        <!-- Contact Name Column -->
+        <ng-container matColumnDef="contact_name">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">Contact Name</th>
+          <td mat-cell *matCellDef="let element" class="!p-10">
+            {{ element.contact_name }}
+          </td>
+        </ng-container>
+
+        <!-- Email Address Column -->
+        <ng-container matColumnDef="email_address">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">
+            Email Address
+          </th>
+          <td mat-cell *matCellDef="let element" class="!text-slate-600 !p-10">
+            {{ element.email_address }}
+          </td>
+        </ng-container>
+
+        <!-- Phone Number Column -->
+        <ng-container matColumnDef="phone_number">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">Phone Number</th>
+          <td mat-cell *matCellDef="let element" class="!text-slate-600 !p-10">
+            {{ element.phone_number }}
+          </td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">Address</th>
+          <td mat-cell *matCellDef="let element" class="!text-slate-600 !p-10">
+            {{ element.address }}
+          </td>
+        </ng-container>
+
+        <!-- Salesperson -->
+        <ng-container matColumnDef="salesperson">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">Salesperson</th>
+          <td mat-cell *matCellDef="let element" class="!text-slate-600 !p-10">
+            {{ element.salesperson }}
+          </td>
+        </ng-container>
+
+        <!-- Person Id -->
+        <ng-container matColumnDef="person_id">
+          <th mat-header-cell *matHeaderCellDef class="!pl-10">Person Id</th>
+          <td mat-cell *matCellDef="let element" class="!text-slate-600 !p-10">
+            {{ element.person_id }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selection.toggle(row)"
+        ></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- sidebar -->
+  <div
+    class="bg-zinc-50 overflow-hidden transition-all"
+    [ngStyle]="{ width: sidebarWidth }"
+  >
+    <div class="flex flex-col space-y-4">
+      <app-child-component
+      [data]="selectedItems"
+      (dataChange)="dataChanged($event)"
+      (unCheckItems)="isItemChecked($event)"
+    
+    ></app-child-component>
+
+
+    </div>
+  </div>
+</div>
 
 

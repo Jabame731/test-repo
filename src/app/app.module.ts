@@ -22,12 +22,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CapitalizeAndRemoveUnderscorePipe } from './testing-forms/capitalize-and-remove-underscore.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { ChildComponentComponent } from './child-component/child-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestingFormsComponent,
     CapitalizeAndRemoveUnderscorePipe,
+    ChildComponentComponent,
   ],
   imports: [
     BrowserModule,

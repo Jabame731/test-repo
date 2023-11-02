@@ -1,0 +1,35 @@
+
+<div class="flex flex-col space-y-4">
+  <div class="w-full flex justify-around items-center mt-4">
+    <h1 class="text-md font-bold">Selected Contacts</h1>
+    <span class="text-red-500 p-3 cursor-pointer" (click)="unCheckItem()" >UNCHECK ALL</span>
+  </div>
+
+  <div *ngFor="let item of data" class="p-4 mt-4 rounded-none shadow-md">
+    <div class="flex items-center justify-start">
+      <mat-checkbox
+      [checked]="data.includes(item)"
+      (change)="checkBoxChanged(item)"
+    >
+    </mat-checkbox>
+      <div class="ml-4">
+        <p class="text-gray-900 leading-none">{{ item.position }}</p>
+        <p class="text-gray-600">#{{ item.contact_name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="flex justify-around items-center">
+      <button mat-raised-button color="primary" class="p-3 text-white">
+        <mat-icon>sync_alt</mat-icon>
+        MERGE RECORDS
+      </button>
+
+      <button mat-raised-button class="p-3 bg-blue-500 text-white">
+        <mat-icon>group</mat-icon>
+        MARK AS SAME PERSON
+      </button>
+    </div>
+  </div>
+</div>
